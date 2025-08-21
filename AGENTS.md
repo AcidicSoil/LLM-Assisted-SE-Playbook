@@ -1,156 +1,165 @@
-**Role:** You are a senior full-stack engineer, UX lead, and data-viz specialist. Build a production-ready, interactive single-page web application (SPA) that lets users explore the **“LLM-Assisted-SE-Playbook.”** You will transform the report in `llm-playbook/*` into normalized data and a rich, explorable UI.
+# Role & Mission
+
+You are a senior full-stack engineer, UX lead, and data-viz specialist. Build a fast, accessible, offline-capable **single-page web application (SPA)** that lets users explore the **“LLM-Assisted Software Engineering Playbook.”** You will convert the provided report into normalized JSON and ship a polished, explorable UI with search, filtering, comparisons, and interactive visualizations.
 
 ---
 
-## Objectives
+## Inputs & Context
 
-* Convert the markdown report(s) in `llm-playbook/*` into a validated JSON dataset.
-* Ship a fast, accessible, offline-capable SPA with intuitive navigation, faceted search/filters, comparisons, and interactive visualizations.
-* Provide complete, ready-to-run source code, tests, and lightweight CI.
+* **Primary source:** all files in `llm-playbook/*` (PDF and/or Markdown versions of the playbook).
+* **Assume local access** to these files at build time. No external network calls at runtime except loading the local JSON you generate.
+* **Audience:** engineers and product leads evaluating LLM-assisted SE techniques.
 
 ---
 
-## Tech Constraints (Default Stack)
+## Output Contract (One Markdown Artifact)
+
+Return **exactly one** markdown artifact named:
+**`LLM-Assisted-SE-Playbook Explorer — Full Source (React 18 + TypeScript + Vite)`**
+It must contain the **entire repository** as sections grouped by **path**, each with a fenced code block containing the exact file contents. **No commentary** outside headings and code blocks. No TODOs/stubs except PNG icon placeholders.
+
+**Required file tree (minimum):**
+
+* `package.json` (scripts: dev, build, preview, typecheck, lint, format, test, test\:watch, e2e, storybook, build-storybook, prepare)
+* `tsconfig.json`, `tsconfig.base.json`
+* `vite.config.ts` (with `vite-plugin-pwa`)
+* `postcss.config.cjs`, `tailwind.config.ts`, `.eslintrc.cjs`, `.prettierrc`, `.gitignore`
+* `.husky/*`, `lint-staged.config.mjs`, `commitlint.config.cjs`
+* `index.html` (strict CSP)
+* `src/`
+
+  * `main.tsx`, `styles/global.css`
+  * `app/router.tsx`, `app/shell.tsx`, `app/store.ts`
+  * `components/` (ThemeToggle, CommandPalette, KpiCard, SearchInput, minimal ui primitives)
+  * `pages/` (HomePage, NotFound)
+  * `features/explorer/ExplorerPage.tsx`
+  * `features/compare/ComparePage.tsx`
+  * `features/prompts/PromptLabPage.tsx`
+  * `viz/RoiDifficultyScatter.tsx` (+ optional Sankey component)
+  * `data/schemas.ts` (Zod), `data/repo.ts` (load+validate JSON), `data/indexer.ts` (Fuse.js helper)
+  * `utils/cn.ts`
+  * `__tests__/schemas.test.ts`, `vitest.setup.ts`
+* `public/manifest.webmanifest`, `public/favicon.svg`, `public/icons/pwa-192.png`, `public/icons/pwa-512.png`
+* `public/data/playbook.json` (seed you generate by parsing `llm-playbook/*`)
+* `e2e/` (`playwright.config.ts`, `tests/smoke.spec.ts`)
+* `.github/workflows/ci.yml` (lint → typecheck → unit → build → e2e)
+* `.storybook/main.ts`, `.storybook/preview.ts`
+* `README.md` (quickstart, scripts, data notes, a11y, PWA, CI)
+
+---
+
+## Default Tech Stack (adapt if unavailable, preserve behavior)
 
 * **Frontend:** React 18 + TypeScript + Vite (SPA)
 * **Routing:** React Router
-* **Styling:** TailwindCSS with dark mode
-* **State/Search:** Zustand (app state) + Fuse.js (client search)
-* **Validation:** Zod (dataset schema + runtime validation)
-* **Viz:** Recharts (scatter, matrix) + `d3-sankey` (flows)
-* **Build:** Vite, PWA via `vite-plugin-pwa`
-* **Testing:** Vitest + @testing-library/react + `axe-core` a11y checks
-* **Utilities:** DOMPurify (safe markdown rendering), date-fns, clsx
+* **Styling:** TailwindCSS (dark mode class strategy)
+* **State/Search:** Zustand (light state) + Fuse.js (client search)
+* **Validation:** Zod (runtime validation of JSON)
+* **Viz:** Recharts (scatter) and `d3-sankey` (optional)
+* **Build:** Vite, PWA via `vite-plugin-pwa` (offline cache)
+* **Testing:** Vitest (+ Testing Library) and Playwright (smoke)
+* **Quality:** ESLint + Prettier + Husky + lint-staged
+* **CI:** GitHub Actions
 
-If `llm-playbook/*` isn’t available, generate a realistic stub dataset from the structure below so the app remains fully functional.
-
----
-
-## Data Modeling
-
-Design a normalized schema capturing practices, patterns, stages, artifacts, metrics, risks, and relationships.
-
-**Zod schema (conceptual):**
-
-* `Node`: `{ id, type: "practice" | "pattern" | "anti_pattern" | "stage" | "artifact" | "metric" | "tool" | "concept" | "case_study", title, summary, detailsMD, tags[], roles[], stages[], inputs[], outputs[], impact: 1..5, effort: 1..5, difficulty: "low"|"med"|"high", maturity: "emerging"|"established"|"experimental", references[], sourcePath }`
-* `Relation`: `{ id, fromId, toId, kind: "depends_on" | "enhances" | "conflicts_with" | "precedes" | "outputs" | "measures", weight?: number, evidence?: string }`
-* `Dataset`: `{ nodes: Node[], relations: Relation[], glossary?: { term, definition }[], sources?: { id, title, url }[] }`
-
-**Parsing rules:**
-
-* Extract front-matter (YAML) if present; otherwise infer from headings/sections.
-* Map headings like “Benefits,” “Risks,” “Steps,” “Prereqs,” “Inputs/Outputs,” “Metrics,” “Anti-patterns,” “Examples,” “References.”
-* Build Sankey flows using `precedes | outputs` relations.
-* Compute derived fields (e.g., `quadrant = impact×effort`, `searchText`).
-* Validate with Zod; emit a single `public/data/playbook.json` used by the app.
-
-**Script:** Node/TS CLI `scripts/build-data.ts` that:
-
-1. scans `llm-playbook/*`,
-2. parses markdown (remark/gray-matter),
-3. sanitizes HTML fragments,
-4. constructs & validates `Dataset`,
-5. writes JSON + lightweight stats report.
-
-Include unit tests for the parser and schema.
+If an environment forbids any default, substitute the closest equivalent (e.g., Next.js static export, Preact, Vanilla Extract) while keeping **identical features, structure, and UX**.
 
 ---
 
-## UX Requirements
+## Data Model (Normalize the Playbook)
 
-**Global**
+Parse `llm-playbook/*` into this schema and save as `public/data/playbook.json`. Validate at runtime with Zod.
 
-* Top nav: Home, Explore, Visualize, Compare, Glossary, About.
-* Persistent search bar (Fuse.js); filter drawer (stages, roles, type, tags, effort, impact, maturity).
-* Results list with pill chips for filters, clear-all, sort (Relevance, Impact, Effort, A→Z).
-* Keyboard shortcuts: `/` focus search, `f` toggle filters, `?` help, `s` save view, `c` open compare.
+```ts
+// Zod/TypeScript models you MUST implement:
+Pattern = {
+  id: string, title: string, summary: string,
+  phase: 'Ideation'|'Scaffolding'|'Coding'|'Review'|'Testing'|'Deployment',
+  difficulty: 'Beginner'|'Intermediate'|'Advanced',
+  roi: number /*0..10*/,
+  steps: string[], bestPractices: string[],
+  antiPatterns?: string[], prompts?: string[], tools?: string[],
+  metrics?: string[], risks?: string[], tags: string[], links?: string[],
+  relations: { id: string, type: 'pattern'|'workflow'|'tool'|'prompt'|'metric'|'risk', weight?: number }[]
+}
 
-**Detail View**
+Workflow = {
+  id: string, title: string, summary: string,
+  stages: { name: string, goals: string[], artifacts?: string[] }[],
+  kpis?: string[], tags: string[], relations: Pattern['relations']
+}
 
-* Markdown rendering with safe HTML; auto-TOC.
-* Side metadata panel (tags, roles, stages, metrics).
-* Relationship graph preview (neighbor list + quick links).
-* “Related” section (by relations + semantic similarity via Fuse).
+Tool = {
+  id: string, name: string, category: string, cost?: string, url?: string,
+  strengths: string[], limits: string[], tags: string[], relations: Pattern['relations']
+}
 
-**Compare**
+Prompt = {
+  id: string, title: string, body: string, useCases: string[],
+  inputs?: string[], outputs?: string[], tags: string[], relations: Pattern['relations']
+}
 
-* Pin up to 4 items; show attribute table, pros/cons, risk flags, and a mini impact-vs-effort scatter with highlighted points.
+Metric = { id: string, name: string, desc: string, scale: 'ordinal'|'ratio'|'percent', compute?: string, tags: string[] }
+Risk   = { id: string, name: string, mitigation: string[], severity: 'Low'|'Med'|'High', tags: string[] }
 
-**Visualize**
+Playbook = {
+  version: string, updatedAt: string,
+  patterns: Pattern[], workflows: Workflow[], tools: Tool[],
+  prompts: Prompt[], metrics: Metric[], risks: Risk[]
+}
+```
 
-* **Sankey:** flows across stages (e.g., Idea → Spec → Code → Review → Deploy). Filters respect current facets.
-* **Scatter:** Impact (y) vs Effort (x), facet by type, hover tooltips, lasso select to pin.
-* **Matrix/Heatmap:** Stages × Practices coverage (count or relevance score).
-
-**Quality**
-
-* Responsive (mobile → desktop), dark mode via `class` strategy.
-* A11y: semantic landmarks, ARIA labels, focus states, skip-to-content, color-contrast ≥ 4.5.
-* Performance: code-split routes, lazy-load charts, prefetch data, image optimization.
-* Shareable deep links: all filters and selections encoded in URL query params.
-* Offline PWA: cache `index.html`, `assets`, `playbook.json`; offline fallback pages.
-* Local persistence: user pins, theme, last query in `localStorage`.
-
----
-
-## Security
-
-* Sanitize any rendered HTML (DOMPurify).
-* No eval or remote code execution.
-* Strict CSP meta in `index.html` where applicable.
-
----
-
-## Deliverables (produce all in one response, in this order)
-
-1. **Architecture & Plan (markdown):** goals, user personas, key journeys, route map, state model (Zustand store shape), data flow, URL scheme, error states, a11y plan.
-2. **Data Schema & Parser Spec:** Zod schemas, markdown parsing conventions, relation inference rules, test cases.
-3. **Source Code (full repo):**
-
-   * `package.json` with scripts: `dev`, `build`, `preview`, `test`, `lint`, `typecheck`, `data`
-   * `/scripts/build-data.ts` with unit tests in `/scripts/__tests__`
-   * `/src/` structure:
-
-     * `main.tsx`, `App.tsx`, `routes/*`
-     * `components/*` (SearchBar, FilterDrawer, Card, Tag, Pill, Table, Modal, Tabs, Tooltip)
-     * `charts/*` (Sankey.tsx, Scatter.tsx, Matrix.tsx)
-     * `state/store.ts` (filters, pins, theme, dataset slice)
-     * `lib/*` (fuse config, urlSync, formatters, a11y, analytics stub)
-     * `pages/*` (Home, Explore, Visualize, Compare, Glossary, About, NotFound)
-     * `styles/tailwind.css`, `theme.ts`
-     * `workers/pwa.ts` (vite-plugin-pwa config)
-     * `types/*` (zod-inferred types)
-     * `data/` (loaded JSON)
-   * Tailwind config with dark mode, sensible typography.
-   * Router with lazy routes and error boundaries.
-4. **Tests:**
-
-   * Vitest unit tests for parsers, store reducers/selectors, and critical components.
-   * React Testing Library for pages; `axe-core` smoke a11y on key screens.
-5. **CI:** GitHub Actions workflow: install (pnpm), typecheck, lint, test, build, run `scripts/build-data.ts`.
-6. **Docs:**
-
-   * `README.md` with setup, scripts, data build pipeline, PWA notes, deployment guide (Vercel/Netlify), and keyboard shortcuts.
-   * `CONTRIBUTING.md` (coding standards, commit style, testing guidance).
-   * `docs/DATA_MODEL.md` (schema, examples).
-7. **Seed Data:** If `llm-playbook/*` absent, include `public/data/playbook.json` generated from a stub covering at least 12 practices across 5 stages with diverse relations.
+**Seeding requirement (minimum):** populate at least **3 Patterns**, **1 Workflow**, **2 Tools**, **2 Prompts**, **2 Metrics**, **2 Risks** directly from the playbook content. Use URL-safe, consistent `id`s.
 
 ---
 
-## Implementation Notes
+## UX & Features
 
-* Use TypeScript everywhere; export Zod-inferred types.
-* Fuse.js config: weight `title:0.5, tags:0.3, summary:0.2`, threshold \~0.3, tokenize.
-* URL sync: two-way binding between store and query params (`?q=&types=&stages=&roles=&impact=&effort=&maturity=&pins=`).
-* Recharts: single-chart components with responsive containers; tooltips, legends, and aria labels.
-* Sankey: derive nodes/links from `relations` where `kind` in `["precedes","outputs"]`.
-* Matrix: compute stage × type coverage from `nodes`.
-* Ensure no blocking hydration issues; guard charts behind `useEffect` data-ready checks.
+* **App shell & nav:** Sticky top nav with routes **Home, Explore, Compare, Prompts**; dark/light toggle.
+* **Home:** KPI tiles (counts from JSON), version, `updatedAt`.
+* **Explore:** Search (Fuse.js), **Phase** filter, Sort (**ROI | Difficulty | Updated**). Card grid with badges (phase, difficulty, ROI).
+* **Compare:** Simple comparison table for 3 patterns (phase, difficulty, ROI, best practices). If selection UI would bloat scope, show first 3 as sample.
+* **Prompts (Prompt Lab):** Card list with one-click **Copy** of prompt bodies.
+* **Visualizations:**
+
+  * **Scatter:** ROI vs Difficulty (map Beginner=1, Intermediate=2, Advanced=3). Tooltip shows title.
+  * **Sankey (optional):** Flow across workflow stages using `relations` (hide gracefully if insufficient data).
+* **Command palette:** ⌘/Ctrl+K opens a palette; returns top hits across entities via Fuse index.
+* **Keyboard:** `/` focuses Explore search.
+* **Accessibility:** Skip-to-content link; ARIA labels; visible focus states; basic axe-style checks pass.
 
 ---
 
-## Output Protocol
+## Non-Functional Requirements
 
-Produce everything in a single response, in the order above. For the **Source Code**, output a cohesive repository with file paths as headings and code blocks per file. Keep commands copy-pasteable. Do not omit critical files. When resources are missing, include and reference the **stub dataset** so the app runs immediately.
+* **Performance:** <100KB gzipped JS on initial route (excluding `d3`); code-split heavy viz.
+* **Security:** Strict CSP in `index.html`; sanitize any Markdown-to-HTML (if used).
+* **PWA:** Installable; offline cache of static assets and `playbook.json` with **stale-while-revalidate**.
+* **DX:** Strict TypeScript; eslint/prettier on pre-commit.
+* **Idempotence:** Deterministic build; no runtime network calls beyond local JSON.
 
-**Think step-by-step**: first draft the Architecture & Plan, then the Data Schema & Parser Spec, and only then emit the full source code, tests, CI, and documentation.
+---
+
+## Acceptance Criteria
+
+1. App runs locally (`pnpm dev`) and **Home** shows KPI counts from `public/data/playbook.json`.
+2. **Explore** supports search, phase filter, and sort; shows ROI badge and tags; dark/light works.
+3. **Scatter** renders with Difficulty mapped 1–3; tooltips show pattern titles.
+4. **Prompt Lab** lists prompts with a working **Copy** button.
+5. **Command palette** opens with ⌘/Ctrl+K and returns top cross-entity matches; `/` focuses search.
+6. **PWA** installs; assets + JSON cached; app remains navigable offline with last-fetched data.
+7. **Accessibility:** skip link works; no critical axe issues.
+8. **CI** passes: lint, typecheck, unit, build, e2e (smoke).
+9. JSON validates via **Zod** on load; invalid data surfaces a clear, user-visible error state.
+
+---
+
+## Implementation Workflow (Do this before emitting code)
+
+1. **Plan (JSON):** Output a brief machine-readable plan (`build_plan.json`) with sections: `files`, `routes`, `components`, `data_model`, `tests`, `ci`.
+2. **Parse & Normalize:** From `llm-playbook/*`, extract entities to match the schema; generate `public/data/playbook.json`.
+3. **Scaffold & Wire:** Create app shell, routes, data loader (with Zod validation + friendly error).
+4. **Implement Features:** Explore, Compare, Prompts, Scatter (and optional Sankey).
+5. **Add PWA, A11y, Tests, CI.**
+6. **Verify Acceptance Criteria** locally (mock in comments only if necessary; final artifact must be runnable).
+
+> After planning, **return only the final repo artifact** per “Output Contract” (single markdown with grouped file sections). Do **not** include the plan or any extra explanations.

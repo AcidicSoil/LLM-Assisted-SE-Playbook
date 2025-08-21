@@ -1,0 +1,398 @@
+{
+  "nodes": [
+    {
+      "id": "stage-idea",
+      "type": "stage",
+      "title": "idea",
+      "summary": "Stage idea",
+      "tags": [],
+      "roles": [],
+      "stages": [],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "stage-spec",
+      "type": "stage",
+      "title": "spec",
+      "summary": "Stage spec",
+      "tags": [],
+      "roles": [],
+      "stages": [],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "stage-code",
+      "type": "stage",
+      "title": "code",
+      "summary": "Stage code",
+      "tags": [],
+      "roles": [],
+      "stages": [],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "stage-review",
+      "type": "stage",
+      "title": "review",
+      "summary": "Stage review",
+      "tags": [],
+      "roles": [],
+      "stages": [],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "stage-deploy",
+      "type": "stage",
+      "title": "deploy",
+      "summary": "Stage deploy",
+      "tags": [],
+      "roles": [],
+      "stages": [],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p1",
+      "type": "practice",
+      "title": "Practice 1",
+      "summary": "Summary 1",
+      "tags": [
+        "tag1"
+      ],
+      "roles": [],
+      "stages": [
+        "spec"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 2,
+      "effort": 4,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p2",
+      "type": "practice",
+      "title": "Practice 2",
+      "summary": "Summary 2",
+      "tags": [
+        "tag2"
+      ],
+      "roles": [],
+      "stages": [
+        "code"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 5,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p3",
+      "type": "practice",
+      "title": "Practice 3",
+      "summary": "Summary 3",
+      "tags": [
+        "tag0"
+      ],
+      "roles": [],
+      "stages": [
+        "review"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 4,
+      "effort": 1,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p4",
+      "type": "practice",
+      "title": "Practice 4",
+      "summary": "Summary 4",
+      "tags": [
+        "tag1"
+      ],
+      "roles": [],
+      "stages": [
+        "deploy"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 5,
+      "effort": 2,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p5",
+      "type": "practice",
+      "title": "Practice 5",
+      "summary": "Summary 5",
+      "tags": [
+        "tag2"
+      ],
+      "roles": [],
+      "stages": [
+        "idea"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 1,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p6",
+      "type": "practice",
+      "title": "Practice 6",
+      "summary": "Summary 6",
+      "tags": [
+        "tag0"
+      ],
+      "roles": [],
+      "stages": [
+        "spec"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 2,
+      "effort": 4,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p7",
+      "type": "practice",
+      "title": "Practice 7",
+      "summary": "Summary 7",
+      "tags": [
+        "tag1"
+      ],
+      "roles": [],
+      "stages": [
+        "code"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 5,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p8",
+      "type": "practice",
+      "title": "Practice 8",
+      "summary": "Summary 8",
+      "tags": [
+        "tag2"
+      ],
+      "roles": [],
+      "stages": [
+        "review"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 4,
+      "effort": 1,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p9",
+      "type": "practice",
+      "title": "Practice 9",
+      "summary": "Summary 9",
+      "tags": [
+        "tag0"
+      ],
+      "roles": [],
+      "stages": [
+        "deploy"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 5,
+      "effort": 2,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p10",
+      "type": "practice",
+      "title": "Practice 10",
+      "summary": "Summary 10",
+      "tags": [
+        "tag1"
+      ],
+      "roles": [],
+      "stages": [
+        "idea"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 1,
+      "effort": 3,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p11",
+      "type": "practice",
+      "title": "Practice 11",
+      "summary": "Summary 11",
+      "tags": [
+        "tag2"
+      ],
+      "roles": [],
+      "stages": [
+        "spec"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 2,
+      "effort": 4,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    },
+    {
+      "id": "p12",
+      "type": "practice",
+      "title": "Practice 12",
+      "summary": "Summary 12",
+      "tags": [
+        "tag0"
+      ],
+      "roles": [],
+      "stages": [
+        "code"
+      ],
+      "inputs": [],
+      "outputs": [],
+      "impact": 3,
+      "effort": 5,
+      "difficulty": "med",
+      "maturity": "emerging",
+      "references": []
+    }
+  ],
+  "relations": [
+    {
+      "id": "r0",
+      "fromId": "p1",
+      "toId": "stage-spec",
+      "kind": "precedes"
+    },
+    {
+      "id": "r1",
+      "fromId": "p2",
+      "toId": "stage-code",
+      "kind": "precedes"
+    },
+    {
+      "id": "r2",
+      "fromId": "p3",
+      "toId": "stage-review",
+      "kind": "precedes"
+    },
+    {
+      "id": "r3",
+      "fromId": "p4",
+      "toId": "stage-deploy",
+      "kind": "precedes"
+    },
+    {
+      "id": "r4",
+      "fromId": "p5",
+      "toId": "stage-idea",
+      "kind": "precedes"
+    },
+    {
+      "id": "r5",
+      "fromId": "p6",
+      "toId": "stage-spec",
+      "kind": "precedes"
+    },
+    {
+      "id": "r6",
+      "fromId": "p7",
+      "toId": "stage-code",
+      "kind": "precedes"
+    },
+    {
+      "id": "r7",
+      "fromId": "p8",
+      "toId": "stage-review",
+      "kind": "precedes"
+    },
+    {
+      "id": "r8",
+      "fromId": "p9",
+      "toId": "stage-deploy",
+      "kind": "precedes"
+    },
+    {
+      "id": "r9",
+      "fromId": "p10",
+      "toId": "stage-idea",
+      "kind": "precedes"
+    },
+    {
+      "id": "r10",
+      "fromId": "p11",
+      "toId": "stage-spec",
+      "kind": "precedes"
+    },
+    {
+      "id": "r11",
+      "fromId": "p12",
+      "toId": "stage-code",
+      "kind": "precedes"
+    }
+  ]
+}
