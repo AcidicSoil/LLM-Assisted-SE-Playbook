@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../app/store';
 import { createIndexer } from '../data/indexer';
+import { Entity } from '../data/schemas';
 
 export default function CommandPalette() {
   const playbook = useStore((s) => s.playbook);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<{ item: Entity }[]>([]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

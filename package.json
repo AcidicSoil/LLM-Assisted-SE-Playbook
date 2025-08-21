@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .ts,.tsx,.js,.cjs,.mjs",
     "format": "prettier --write .",
     "test": "vitest",
     "test:watch": "vitest --watch",
@@ -26,8 +26,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.8.0",
-    "zustand": "^4.4.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
@@ -37,6 +37,8 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.9",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.14",
     "axe-core": "^4.7.2",

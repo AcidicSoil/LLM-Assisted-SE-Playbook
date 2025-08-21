@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../app/store';
 import SearchInput from '../../components/SearchInput';
 import { Pattern } from '../../data/schemas';
-import { createIndexer } from '../../data/indexer';
+import { createPatternIndexer } from '../../data/indexer';
 
 export default function ExplorerPage() {
   const playbook = useStore((s) => s.playbook);
@@ -28,8 +28,8 @@ export default function ExplorerPage() {
     let items = playbook.patterns;
     if (phase) items = items.filter((p) => p.phase === phase);
     if (query) {
-      const index = createIndexer({ patterns: items } as any);
-      items = index.search(query).map((r: any) => r.item);
+      const index = createPatternIndexer(items);
+      items = index.search(query).map((r) => r.item);
     }
     if (sort === 'roi') items = [...items].sort((a, b) => b.roi - a.roi);
     if (sort === 'difficulty')

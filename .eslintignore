@@ -1,0 +1,8 @@
+dist
+build
+coverage
+public
+node_modules
+playwright-report
+llm-playbook/**
+

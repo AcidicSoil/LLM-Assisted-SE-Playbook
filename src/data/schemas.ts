@@ -107,3 +107,4 @@ export type Prompt = z.infer<typeof PromptSchema>;
 export type Metric = z.infer<typeof MetricSchema>;
 export type Risk = z.infer<typeof RiskSchema>;
 export type Playbook = z.infer<typeof PlaybookSchema>;
+export type Entity = Pattern | Workflow | Tool | Prompt | Metric | Risk;
