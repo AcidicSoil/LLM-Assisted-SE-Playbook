@@ -16,11 +16,17 @@ npm run dev
 - `typecheck` - TypeScript check
 - `test` - unit tests
 - `e2e` - Playwright tests
-- `data` - rebuild dataset
+- `data` - rebuild dataset from markdown
 
 ## Data
 
-Source data lives in `public/data/playbook.json` and is validated at runtime.
+Playbook content in `llm-playbook/*.md` is converted into `public/data/playbook.json` by running:
+
+```bash
+npm run data
+```
+
+The resulting JSON is validated at runtime.
 
 ## Accessibility
 
