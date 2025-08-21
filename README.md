@@ -21,6 +21,7 @@ npm run dev
 ## Data
 
 Source data lives in `public/data/playbook.json` and is validated at runtime.
+Run `npm run data` to rebuild this file from markdown sources in `llm-playbook/`.
 
 ## Accessibility
 
