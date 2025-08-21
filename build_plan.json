@@ -1,0 +1,77 @@
+{
+  "files": [
+    "package.json",
+    "tsconfig.base.json",
+    "tsconfig.json",
+    "vite.config.ts",
+    "postcss.config.cjs",
+    "tailwind.config.ts",
+    ".eslintrc.cjs",
+    ".prettierrc",
+    ".gitignore",
+    "index.html",
+    "src/main.tsx",
+    "src/styles/global.css",
+    "src/app/router.tsx",
+    "src/app/shell.tsx",
+    "src/app/store.ts",
+    "src/components/ThemeToggle.tsx",
+    "src/components/CommandPalette.tsx",
+    "src/components/KpiCard.tsx",
+    "src/components/SearchInput.tsx",
+    "src/pages/HomePage.tsx",
+    "src/pages/NotFound.tsx",
+    "src/features/explorer/ExplorerPage.tsx",
+    "src/features/compare/ComparePage.tsx",
+    "src/features/prompts/PromptLabPage.tsx",
+    "src/viz/RoiDifficultyScatter.tsx",
+    "src/data/schemas.ts",
+    "src/data/repo.ts",
+    "src/data/indexer.ts",
+    "src/utils/cn.ts",
+    "src/__tests__/schemas.test.ts",
+    "src/vitest.setup.ts",
+    "public/manifest.webmanifest",
+    "public/favicon.svg",
+    "public/icons/pwa-192.png",
+    "public/icons/pwa-512.png",
+    "public/data/playbook.json",
+    "e2e/playwright.config.ts",
+    "e2e/tests/smoke.spec.ts",
+    ".github/workflows/ci.yml",
+    ".husky/pre-commit",
+    ".husky/commit-msg",
+    "lint-staged.config.mjs",
+    "commitlint.config.cjs",
+    "README.md",
+    ".storybook/main.ts",
+    ".storybook/preview.ts"
+  ],
+  "routes": [
+    { "path": "/", "component": "HomePage" },
+    { "path": "/explore", "component": "ExplorerPage" },
+    { "path": "/compare", "component": "ComparePage" },
+    { "path": "/prompts", "component": "PromptLabPage" },
+    { "path": "*", "component": "NotFound" }
+  ],
+  "components": [
+    "ThemeToggle",
+    "CommandPalette",
+    "KpiCard",
+    "SearchInput",
+    "RoiDifficultyScatter"
+  ],
+  "data_model": {
+    "entities": ["Pattern", "Workflow", "Tool", "Prompt", "Metric", "Risk"],
+    "file": "public/data/playbook.json",
+    "schemaFile": "src/data/schemas.ts"
+  },
+  "tests": {
+    "unit": "vitest",
+    "e2e": "playwright"
+  },
+  "ci": {
+    "workflow": ".github/workflows/ci.yml",
+    "steps": ["lint", "typecheck", "test", "build", "e2e"]
+  }
+}

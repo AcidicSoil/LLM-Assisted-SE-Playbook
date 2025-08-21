@@ -1,0 +1,135 @@
+{
+  "version": "0.1.0",
+  "updatedAt": "2024-01-01",
+  "patterns": [
+    {
+      "id": "ideation-requirements",
+      "title": "LLM for Requirements Ideation",
+      "summary": "Use LLMs to brainstorm and refine requirements.",
+      "phase": "Ideation",
+      "difficulty": "Beginner",
+      "roi": 8,
+      "steps": ["Outline goals", "Ask LLM for user stories"],
+      "bestPractices": ["Review outputs", "Iterate with stakeholders"],
+      "tags": ["requirements"],
+      "relations": []
+    },
+    {
+      "id": "scaffold-project",
+      "title": "Project Scaffolding",
+      "summary": "Generate starter code and configuration.",
+      "phase": "Scaffolding",
+      "difficulty": "Intermediate",
+      "roi": 7,
+      "steps": ["Describe project", "Generate scaffolds"],
+      "bestPractices": ["Verify structure", "Add tests"],
+      "tags": ["scaffold"],
+      "relations": []
+    },
+    {
+      "id": "code-review",
+      "title": "LLM Code Review",
+      "summary": "Use LLM to review code patches.",
+      "phase": "Review",
+      "difficulty": "Advanced",
+      "roi": 6,
+      "steps": ["Provide diff", "Ask for issues"],
+      "bestPractices": ["Validate suggestions", "Enforce standards"],
+      "tags": ["review"],
+      "relations": []
+    }
+  ],
+  "workflows": [
+    {
+      "id": "basic-cycle",
+      "title": "Basic Development Cycle",
+      "summary": "Simple workflow from idea to deploy.",
+      "stages": [
+        {
+          "name": "Ideation",
+          "goals": ["Capture ideas"]
+        },
+        {
+          "name": "Coding",
+          "goals": ["Implement features"]
+        },
+        {
+          "name": "Deployment",
+          "goals": ["Release to users"]
+        }
+      ],
+      "tags": ["workflow"],
+      "relations": []
+    }
+  ],
+  "tools": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "category": "LLM",
+      "strengths": ["Conversational", "General purpose"],
+      "limits": ["May hallucinate"],
+      "tags": ["openai"],
+      "relations": []
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "category": "Coding Assistant",
+      "strengths": ["Code completion"],
+      "limits": ["Requires subscription"],
+      "tags": ["github"],
+      "relations": []
+    }
+  ],
+  "prompts": [
+    {
+      "id": "bug-fix",
+      "title": "Debugging Assistant",
+      "body": "I have this bug: ... How can I fix it?",
+      "useCases": ["Debugging"],
+      "tags": ["debug"],
+      "relations": []
+    },
+    {
+      "id": "test-writer",
+      "title": "Test Case Generator",
+      "body": "Generate unit tests for the following function: ...",
+      "useCases": ["Testing"],
+      "tags": ["tests"],
+      "relations": []
+    }
+  ],
+  "metrics": [
+    {
+      "id": "cycle-time",
+      "name": "Cycle Time",
+      "desc": "Time from start to finish",
+      "scale": "ratio",
+      "tags": ["speed"]
+    },
+    {
+      "id": "defect-rate",
+      "name": "Defect Rate",
+      "desc": "Bugs per release",
+      "scale": "ratio",
+      "tags": ["quality"]
+    }
+  ],
+  "risks": [
+    {
+      "id": "privacy-leak",
+      "name": "Privacy Leak",
+      "mitigation": ["Sanitize data"],
+      "severity": "High",
+      "tags": ["security"]
+    },
+    {
+      "id": "overreliance",
+      "name": "Overreliance on AI",
+      "mitigation": ["Keep human in loop"],
+      "severity": "Med",
+      "tags": ["process"]
+    }
+  ]
+}
