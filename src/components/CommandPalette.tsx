@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useStore } from '../app/store';
 import { createIndexer } from '../data/indexer';
 import { Entity } from '../data/schemas';
+import { getEntityLabel } from '../utils/entity';
 
 export default function CommandPalette() {
   const playbook = useStore((s) => s.playbook);
@@ -47,7 +48,7 @@ export default function CommandPalette() {
         <ul>
           {results.map((r) => (
             <li key={r.item.id} className="p-1">
-              {r.item.title || r.item.name}
+              {getEntityLabel(r.item)}
             </li>
           ))}
         </ul>
